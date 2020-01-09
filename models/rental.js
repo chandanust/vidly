@@ -1,39 +1,68 @@
-const mongoose = require('mongoose');
 const Joi = require('joi');
-const movieSchema = require('./movie');
-const customerSchema = require('./customer');
+const mongoose = require('mongoose');
 
-const rentalSchema = new mongoose.Schema({
-    customer: {
-        type: customerSchema,
-        required: true
-    },
-    movie: {
-        type: movieSchema,
-        required: true
-    },
-    issueDate: {
-        type: Date,
-        default: Date.now()
-    },
-    returnDate: {
-        type: Date,
-        default: Date.now()
-    }
-});
-
-const Rental = mongoose.model('Rental', rentalSchema);
+const Rental = mongoose.model('Rental', new mongoose.Schema({
+  customer: { 
+    type: new mongoose.Schema({
+      name: {
+        type: String,
+        required: true,
+        minlength: 5,
+        maxlength: 50
+      },
+      isGold: {
+        type: Boolean,
+        default: false
+      },
+      phone: {
+        type: String,
+        required: true,
+        minlength: 5,
+        maxlength: 50
+      }      
+    }),  
+    required: true
+  },
+  movie: {
+    type: new mongoose.Schema({
+      title: {
+        type: String,
+        required: true,
+        trim: true, 
+        minlength: 5,
+        maxlength: 255
+      },
+      dailyRentalRate: { 
+        type: Number, 
+        required: true,
+        min: 0,
+        max: 255
+      }   
+    }),
+    required: true
+  },
+  dateOut: { 
+    type: Date, 
+    required: true,
+    default: Date.now
+  },
+  dateReturned: { 
+    type: Date
+  },
+  rentalFee: { 
+    type: Number, 
+    min: 0
+  }
+}));
 
 function validateRental(rental) {
-    const schema = {
-        movieId: Joi.string().required(),
-        customerId: Joi.string().required(),
-        issueDate: Joi.date(),
-        returnDate: Joi.date()
-    };
-  
-    return Joi.validate(rental, schema);
-  }
+  const schema = {
+    customerId: Joi.string().required(),
+    movieId: Joi.string().required()
+  };
 
-  exports.Rental = Rental;
-  exports.validate = validateRental;
+  return Joi.validate(rental, schema);
+}
+
+exports.Rental = Rental; 
+exports.validate = validateRental;
