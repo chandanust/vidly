@@ -7,6 +7,7 @@ const rentals = require('../routes/rentals');
 const users = require('../routes/users');
 const auth = require('../routes/auth');
 const returns = require('../routes/returns');
+const programs = require('../routes/programs');
 
 
 module.exports = function(app){
@@ -18,5 +19,6 @@ module.exports = function(app){
     app.use('/api/users', users);
     app.use('/api/auth', auth);
     app.use('/api/returns', returns);
+    app.use('/api/programs', programs);
     app.use(error);
 };
