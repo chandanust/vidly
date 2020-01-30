@@ -1,5 +1,4 @@
 const Joi = require('joi');
-
 const validate = require('../middleware/validate');
 const { Rental } = require('../models/rental');
 const { Movie } = require('../models/movie');

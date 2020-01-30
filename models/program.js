@@ -23,6 +23,6 @@ const programSchema = new mongoose.Schema({
   return Joi.validate(program, schema);
 }
 
-exports.Program = Program;
-exports.programSchema = programSchema;
-exports.validate = validateProgram;
+module.exports.Program = Program;
+module.exports.programSchema = programSchema;
+module.exports.validateProgram = validateProgram;
