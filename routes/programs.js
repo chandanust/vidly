@@ -6,12 +6,16 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 
-router.get('/', auth, async (req, res) => {
+router.get('/', async (req, res) => {
     const programs = await Program.find().sort('programCode');
     res.send(programs);
 });
 
-router.get('/:id', auth, async (req, res) => {
+router.get('/:id', async (req, res) => {
+
+  let objectId = mongoose.Types.ObjectId;
+  if(!objectId.isValid(req.params.id)) return res.status(400).send('invalid Id');
+
     const program = await Program.findById(req.params.id)
     if (!program) return res.status(404).send('The program with the given ID was not found.');
     res.send(program);
@@ -30,6 +34,9 @@ router.post('/', [auth, validate(validateProgram)], async (req, res) => {
 });
 
 router.delete('/:id', [auth, admin], async (req, res) => {
+  let objectId = mongoose.Types.ObjectId;
+  if(!objectId.isValid(req.params.id)) return res.status(400).send('invalid Id');
+
   const program = await Program.findByIdAndRemove(req.params.id);
   if (!program) return res.status(404).send('The program with the given ID was not found.');
 
