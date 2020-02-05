@@ -2,10 +2,6 @@ const mongoose = require('mongoose');
 const Joi = require('joi');
 
 const branchSchema = new mongoose.Schema({
-    program: {
-        programId: String,
-        programShortName: String
-    },
     branchCode: String,
     branchShortName: String,
     branchFullName: String,
@@ -17,8 +13,7 @@ const branchSchema = new mongoose.Schema({
 
   function validateBranch(branch) {
   const schema = {
-    programId: Joi.string().required(),
-    branchCode: Joi.string().min(3).required(),
+    branchCode: Joi.string().min(2).required(),
     branchShortName: Joi.string().min(3).required(),
     branchFullName: Joi.string(),
     branchCategory: Joi.string(),

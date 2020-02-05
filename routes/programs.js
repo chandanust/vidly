@@ -1,6 +1,7 @@
 const auth = require('../middleware/auth');
 const admin = require('../middleware/admin');
 const validate = require('../middleware/validate');
+const validateObjId = require('../middleware/validateObjId');
 const {Program, validateProgram} = require('../models/program');
 const mongoose = require('mongoose');
 const express = require('express');
@@ -11,11 +12,7 @@ router.get('/', async (req, res) => {
     res.send(programs);
 });
 
-router.get('/:id', async (req, res) => {
-
-  let objectId = mongoose.Types.ObjectId;
-  if(!objectId.isValid(req.params.id)) return res.status(400).send('invalid Id');
-
+router.get('/:id', validateObjId, async (req, res) => {
     const program = await Program.findById(req.params.id)
     if (!program) return res.status(404).send('The program with the given ID was not found.');
     res.send(program);
@@ -33,10 +30,7 @@ router.post('/', [auth, validate(validateProgram)], async (req, res) => {
   res.send(program);
 });
 
-router.delete('/:id', [auth, admin], async (req, res) => {
-  let objectId = mongoose.Types.ObjectId;
-  if(!objectId.isValid(req.params.id)) return res.status(400).send('invalid Id');
-
+router.delete('/:id', [auth, admin, validateObjId], async (req, res) => {
   const program = await Program.findByIdAndRemove(req.params.id);
   if (!program) return res.status(404).send('The program with the given ID was not found.');
 
