@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', validateObjId, async (req, res) => {
-    branch = await Branch.findById(req.params.id)
+    const branch = await Branch.findById(req.params.id)
     if (!branch) return res.status(404).send('The branch with the given Branch ID was not found.');
 
     res.send(branch);

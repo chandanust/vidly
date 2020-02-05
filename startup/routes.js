@@ -9,6 +9,7 @@ const auth = require('../routes/auth');
 const returns = require('../routes/returns');
 const programs = require('../routes/programs');
 const branchs = require('../routes/branchs');
+const semesters = require('../routes/semesters');
 
 
 module.exports = function(app){
@@ -22,5 +23,6 @@ module.exports = function(app){
     app.use('/api/returns', returns);
     app.use('/api/programs', programs);
     app.use('/api/branchs', branchs);
+    app.use('/api/semesters', semesters);
     app.use(error);
 };

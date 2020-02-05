@@ -22,4 +22,4 @@ const semesterSchema = new mongoose.Schema({
 }
 
 exports.Semester = Semester;
-exports.validatesemester = validatesemester;
+exports.validateSemester = validatesemester;
