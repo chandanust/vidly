@@ -14,7 +14,7 @@ const branchSchema = new mongoose.Schema({
   function validateBranch(branch) {
   const schema = {
     branchCode: Joi.string().min(2).required(),
-    branchShortName: Joi.string().min(3).required(),
+    branchShortName: Joi.string().min(2).required(),
     branchFullName: Joi.string(),
     branchCategory: Joi.string(),
     branchNameInHindi: Joi.string()

@@ -15,12 +15,11 @@ router.get('/', async (req, res) => {
       res.send(programDetails);  
 });
 
-// router.get('/:id', validateObjId, async (req, res) => {
-//     const semester = await Branch.findById(req.params.id)
-//     if (!semester) return res.status(404).send('The Semester with the given ID was not found.');
-
-//     res.send(semester);
-//   });
+router.get('/:code', async (req, res) => {
+    const programs = await ProgramDetails.find({ code: req.params.code })
+    if (!programs || programs.length === 0) return res.status(404).send('Program Details with given code was not found.');
+    res.send(programs);
+  });
 
   router.post('/', [auth, validate(validateProgramDetails)], async (req, res) =>{
 
