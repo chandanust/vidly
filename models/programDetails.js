@@ -4,6 +4,8 @@ const { Branch } = require('../models/branch');
 const { Semester } = require('../models/semester');
 const programDetailsSchema = new mongoose.Schema({
     programId: String,
+    code: String,
+    shortName: String,
     branchs: [{
         _id: mongoose.Types.ObjectId,
         branchCode: String,
@@ -44,7 +46,8 @@ const programDetailsSchema = new mongoose.Schema({
             semesterList.push({
                 _id: semester._id,
                 semesterCode: semester.semesterCode,
-                semesterShortName: semester.semesterShortName
+                semesterShortName: semester.semesterShortName,
+                fullMarks: semesters[i].fullMarks
             });
         }
     }catch(ex){
